@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Inquiry Detail</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+    <h1>お問い合わせ詳細</h1>
+
+    <div th:if="${message}" th:text="${message}" style="color: red;"></div>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <td th:text="${inquiry.id}">ID</td>
+        </tr>
+        <tr>
+            <th>名前</th>
+            <td th:text="${inquiry.name}">名前</td>
+        </tr>
+        <tr>
+            <th>ふりがな</th>
+            <td th:text="${inquiry.furigana}">ふりがな</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td th:text="${inquiry.email}">Email</td>
+        </tr>
+        <tr>
+            <th>カテゴリ</th>
+            <td th:text="${inquiry.category.name}">カテゴリ</td>
+        </tr>
+        <tr>
+            <th>内容</th>
+            <td th:text="${inquiry.content}">内容</td>
+        </tr>
+        <tr>
+            <th>作成日時</th>
+            <td th:text="${formattedCreatedAt}">作成日時</td>
+        </tr>
+        <tr>
+            <th>ステータス</th>
+            <td>
+                <form th:action="@{/inquiries/{id}/updateStatus(id=${inquiry.id})}" method="post">
+                    <select name="status">
+                        <option value="未対応" th:selected="${inquiry.status == '未対応'}">未対応</option>
+                        <option value="対応中" th:selected="${inquiry.status == '対応中'}">対応中</option>
+                        <option value="対応済み" th:selected="${inquiry.status == '対応済み'}">対応済み</option>
+                    </select>
+                    <button type="submit">更新</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+    <a th:href="@{/inquiries}">戻る</a>
+</body>
+</html>

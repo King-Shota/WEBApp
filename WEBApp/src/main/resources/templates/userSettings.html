@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>ユーザー設定</title>
+	<!-- Bootstrap CSS -->
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<div th:replace="~{common/header :: header}"></div>
+	<div class="container mt-5">
+		<div class="card shadow-sm">
+			<div class="card-header">
+				<h2 class="h4 mb-0">ユーザー設定</h2>
+			</div>
+			<div class="card-body">
+				<form th:action="@{'/user/settings/' + ${userSettingsForm.loginId}}" th:object="${userSettingsForm}"
+					method="post">
+					<div class="mb-3">
+						<label for="loginId" class="form-label">ログインID</label>
+						<input type="text" class="form-control" id="loginId" th:field="*{loginId}" readonly>
+					</div>
+					<div class="mb-3">
+						<label for="email" class="form-label">メールアドレス</label>
+						<input type="email" class="form-control" id="email" th:field="*{email}">
+						<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></div>
+					</div>
+					<div class="mb-3">
+						<label for="password" class="form-label">パスワード</label>
+						<input type="password" class="form-control" id="password" th:field="*{password}">
+						<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger"></div>
+					</div>
+					<div class="mb-3">
+						<label for="name" class="form-label">名前</label>
+						<input type="text" class="form-control" id="name" th:field="*{name}">
+						<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></div>
+					</div>
+					<div class="d-grid">
+						<button type="submit" class="btn btn-primary">更新</button>
+					</div>
+				</form>
+				<div th:if="${param.success}" class="alert alert-success mt-3">更新が成功しました。</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="mt-3">
+		<a th:href="@{/admindashboard}">▶トップメニューへ戻る</a>
+	</div>
+	<!-- Bootstrap Bundle with Popper -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

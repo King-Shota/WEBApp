@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Category List</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+    <h1>カテゴリー一覧</h1>
+    
+    <div th:if="${message}" th:text="${message}" style="color: green;"></div>
+    <div th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>カテゴリー名</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="category : ${categories}">
+                <td th:text="${category.id}">ID</td>
+                <td th:text="${category.name}">名前</td>
+                <td>
+                    <form th:action="@{'/categories/edit/' + ${category.id}}" method="get" style="display: inline;">
+                        <button type="submit">編集</button>
+                    </form>
+                    <form th:action="@{'/categories/delete/' + ${category.id}}" method="post" style="display: inline;">
+                        <button type="submit" onclick="return confirm('本当に削除しますか？')">削除</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/admindashboard}">戻る</a>
+</body>
+</html>

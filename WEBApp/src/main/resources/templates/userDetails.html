@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>一般アカウント詳細</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>一般アカウント詳細</h1>
+        <div>
+            <img th:src="@{${user.profileImage}}" alt="プロフィール画像" width="100" height="100">
+        </div>
+        <div>
+            <label>名前:</label>
+            <span th:text="${user.name}">名前</span>
+        </div>
+        <div>
+            <label>ふりがな:</label>
+            <span th:text="${user.furigana}">ふりがな</span>
+        </div>
+        <div>
+            <label>性別:</label>
+            <span th:text="${user.gender}">性別</span>
+        </div>
+        <div>
+            <label>年齢:</label>
+            <span th:text="${user.age}">年齢</span>
+        </div>
+        <div>
+            <label>自己紹介:</label>
+            <span th:text="${user.selfIntroduction}">自己紹介</span>
+        </div>
+    </div>
+</body>
+</html>

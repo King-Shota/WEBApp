@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Inquiry List</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+    <h1>お問い合わせ一覧</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>カテゴリ</th>
+                <th>内容</th>
+                <th>ステータス</th>
+                <th>詳細</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="inquiry : ${inquiries}">
+                <td th:text="${inquiry.id}">ID</td>
+                <td th:text="${inquiry.category.name}">カテゴリ</td>
+                <td th:text="${#strings.length(inquiry.content) > 10 ? #strings.substring(inquiry.content, 0, 10) : inquiry.content}">内容</td>
+                <td th:text="${inquiry.status}">ステータス</td>
+                <td><a th:href="@{'/inquiries/' + ${inquiry.id}}">詳細</a></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

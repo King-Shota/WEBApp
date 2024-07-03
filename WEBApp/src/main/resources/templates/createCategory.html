@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Category</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+    <h1>カテゴリー追加</h1>
+    
+    <div th:if="${message}" th:text="${message}" style="color: red;"></div>
+
+    <form th:action="@{/categories}" th:object="${category}" method="post">
+        <div>
+            <label for="name">カテゴリー名:</label>
+            <input type="text" id="name" th:field="*{name}" />
+            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red;"></div>
+        </div>
+        <div>
+            <button type="submit">追加</button>
+        </div>
+    </form>
+
+    <a th:href="@{/admindashboard}">戻る</a>
+</body>
+</html>

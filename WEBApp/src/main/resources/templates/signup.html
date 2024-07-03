@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ユーザー登録画面</title>
+    <script>
+        function toggleFields() {
+            var userType = document.querySelector('input[name="userType"]:checked').value;
+            var adminForm = document.getElementById("adminForm");
+            var userForm = document.getElementById("userForm");
+            if (userType === 'ADMIN') {
+                adminForm.style.display = 'block';
+                userForm.style.display = 'none';
+            } else {
+                adminForm.style.display = 'none';
+                userForm.style.display = 'block';
+            }
+        }
+    </script>
+</head>
+
+<body onload="toggleFields()">
+    <div th:insert="~{common/sourceList:: sourceList}"></div>
+    <div th:replace="common/messageIcon:: messageIcon"></div>
+    <div class="container-fluid">
+        <h2>ユーザー登録画面</h2>
+        <div class="alert d-flex align-items-center"
+             th:classappend="|${isError != null ? (isError ? 'alert-danger' : 'alert-primary') : 'd-none'}|"
+             role="alert">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24">
+                <use xlink:href="#exclamation-triangle-fill" th:if="${isError}" />
+                <use xlink:href="#info-fill" th:unless="${isError}" />
+            </svg>
+            <div>
+                <span th:text="${message}"></span>
+            </div>
+        </div>
+        <p>ユーザータイプ：
+            <input type="radio" name="userType" value="ADMIN" onclick="toggleFields()">管理者
+            <input type="radio" name="userType" value="USER" onclick="toggleFields()" checked>一般
+        </p>
+
+        <form id="adminForm" th:action="@{/signup/admin}" method="post" th:object="${adminSignupForm}" style="display:none;">
+            <div class="form-group">
+                <p><label for="loginId">ログインID：</label>
+                    <input class="form-control" type="text" th:field="*{loginId}">
+                </p>
+                <span class="text-danger" th:if="${#fields.hasErrors('loginId')}" th:errors="*{loginId}"></span>
+                
+                <p><label for="name">名前：</label>
+                    <input class="form-control" type="text" th:field="*{name}">
+                </p>
+                <span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                
+                <p><label for="email">メールアドレス：</label>
+                    <input class="form-control" type="email" th:field="*{email}">
+                </p>
+                <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                
+                <p><label for="password">パスワード：</label>
+                    <input class="form-control" type="password" th:field="*{password}">
+                </p>
+                <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                
+                <p><label for="status">ステータス：</label>
+                    <select class="form-control" th:field="*{status}">
+                        <option th:each="status : ${T(com.example.demo.constant.UserStatusKind).values()}"
+                                th:value="${status.name()}"
+                                th:text="${status.displayValue}">ステータス
+                        </option>
+                    </select>
+                </p>
+                <span class="text-danger" th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></span>
+                
+                <p><input class="btn btn-primary" type="submit" value="ユーザー登録"></p>
+            </div>
+        </form>
+
+        <form id="userForm" th:action="@{/signup/user}" method="post" th:object="${generalSignupForm}" enctype="multipart/form-data">
+            <div class="form-group">
+                <p><label for="loginId">ログインID：</label>
+                    <input class="form-control" type="text" th:field="*{loginId}">
+                </p>
+                <span class="text-danger" th:if="${#fields.hasErrors('loginId')}" th:errors="*{loginId}"></span>
+                
+                <p><label for="name">名前：</label>
+                    <input class="form-control" type="text" th:field="*{name}">
+                </p>
+                <span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                
+                <p><label for="email">メールアドレス：</label>
+                    <input class="form-control" type="email" th:field="*{email}">
+                </p>
+                <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                
+                <p><label for="password">パスワード：</label>
+                    <input class="form-control" type="password" th:field="*{password}">
+                </p>
+                <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                
+                <p><label for="profileImage">プロフィール画像：</label>
+                    <input class="form-control" type="file" th:field="*{profileImage}">
+                </p>
+                <span class="text-danger" th:if="${#fields.hasErrors('profileImage')}" th:errors="*{profileImage}"></span>
+                
+                <p><label for="furigana">ふりがな：</label>
+                    <input class="form-control" type="text" th:field="*{furigana}">
+                </p>
+                <span class="text-danger" th:if="${#fields.hasErrors('furigana')}" th:errors="*{furigana}"></span>
+                
+                <p><label for="gender">性別：</label>
+                    <select class="form-control" th:field="*{gender}">
+                        <option th:each="gender : ${T(com.example.demo.constant.Gender).values()}"
+                                th:value="${gender.name()}"
+                                th:text="${gender.displayValue}">性別
+                        </option>
+                    </select>
+                </p>
+                <span class="text-danger" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></span>
+                
+                <p><label for="age">年齢：</label>
+                    <input class="form-control" type="number" th:field="*{age}">
+                </p>
+                <span class="text-danger" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></span>
+                
+                <p><label for="selfIntroduction">自己紹介：</label>
+                    <textarea class="form-control" th:field="*{selfIntroduction}"></textarea>
+                </p>
+                <span class="text-danger" th:if="${#fields.hasErrors('selfIntroduction')}" th:errors="*{selfIntroduction}"></span>
+                
+                <p><label for="status">ステータス：</label>
+                    <select class="form-control" th:field="*{status}">
+                        <option th:each="status : ${T(com.example.demo.constant.UserStatusKind).values()}"
+                                th:value="${status.name()}"
+                                th:text="${status.displayValue}">ステータス
+                        </option>
+                    </select>
+                </p>
+                <span class="text-danger" th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></span>
+                
+                <p><input class="btn btn-primary" type="submit" value="ユーザー登録"></p>
+            </div>
+        </form>
+
+        <div class="mt-3">
+            <a th:href="@{/admindashboard}">▶トップメニューへ戻る</a>
+        </div>
+    </div>
+</body>
+
+</html>

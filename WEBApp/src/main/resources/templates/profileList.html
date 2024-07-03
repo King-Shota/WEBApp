@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>プロフィール一覧</title>
+</head>
+<body>
+<div class="container">
+    <h2>プロフィール一覧</h2>
+    <div class="row">
+        <div class="col-md-4" th:each="profile : ${profiles}">
+            <div class="card mb-4">
+                <img th:src="@{${profile.profileImage}}" class="card-img-top" alt="プロフィール画像">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${profile.name}">名前</h5>
+                    <p class="card-text" th:text="${profile.furigana}">ふりがな</p>
+                    <p class="card-text" th:text="${profile.gender}">性別</p>
+                    <p class="card-text" th:text="${profile.age}">年齢</p>
+                    <p class="card-text" th:text="${profile.introduction}">自己紹介</p>
+                    <button class="btn btn-primary" onclick="likeProfile(/* profile ID here */)">いいね</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function likeProfile(profileId) {
+        fetch(`/profiles/${profileId}/like`, {
+            method: 'POST'
+        }).then(response => {
+            if (response.ok) {
+                alert('いいねしました！');
+            } else {
+                alert('エラーが発生しました。');
+            }
+        });
+    }
+</script>
+</body>
+</html>

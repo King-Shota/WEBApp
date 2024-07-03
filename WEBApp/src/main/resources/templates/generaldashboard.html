@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ダッシュボード</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        #sidebar {
+            height: 100vh;
+            position: fixed;
+            width: 250px;
+            background-color: #343a40;
+            color: white;
+        }
+
+        #sidebar h2 {
+            color: white;
+        }
+
+        #sidebar .nav-link {
+            color: white;
+        }
+
+        #sidebar .nav-link.active {
+            background-color: #495057;
+        }
+
+        #sidebar .nav-link:hover {
+            background-color: #495057;
+        }
+
+        .container-fluid {
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        .rankings h3 {
+            margin-top: 20px;
+        }
+
+        .rankings .list-group-item {
+            background-color: #f8f9fa;
+        }
+
+        .border-bottom {
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- サイドバー -->
+    <nav id="sidebar" class="d-flex flex-column flex-shrink-0 p-3">
+        <h2 class="h4">メニュー</h2>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/userList}">
+                    アカウント一覧
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/inquiries}">
+                    お問い合わせ一覧
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/generaluser/settings}">
+                    ユーザー設定
+                </a>
+            </li>
+            <li class="nav-item">
+                <form th:action="@{/logout}" method="post">
+                    <a class="nav-link" href="#" onclick="this.closest('form').submit();return false;">
+                        ログアウト
+                    </a>
+                </form>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- メインコンテンツ -->
+    <div class="container-fluid">
+        <div class="row">
+            <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">ダッシュボード</h1>
+                </div>
+                <!-- いいねランキングの表示 -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-header">
+                                年間トータルいいね数
+                            </div>
+                            <div class="card-body">
+                                <h2 class="h4" th:text="${yearlyLikes}"></h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-header">
+                                月間いいね数
+                            </div>
+                            <div class="card-body">
+                                <h2 class="h4" th:text="${monthlyLikes}"></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+</body>
+
+</html>

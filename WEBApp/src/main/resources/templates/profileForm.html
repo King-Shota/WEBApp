@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Profile Form</title>
+</head>
+<body>
+<div class="container">
+    <h2>プロフィール登録</h2>
+    <form th:action="@{/profile}" th:object="${profile}" method="post" enctype="multipart/form-data">
+        <!-- CSRFトークン -->
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <div class="form-group">
+            <label for="profileImage">プロフィール画像</label>
+            <input type="file" class="form-control" id="profileImage" th:field="*{profileImage}" accept="image/*">
+        </div>
+        <div class="form-group">
+            <label for="name">名前</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}">
+            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></div>
+        </div>
+        <div class="form-group">
+            <label for="furigana">ふりがな</label>
+            <input type="text" class="form-control" id="furigana" th:field="*{furigana}">
+            <div th:if="${#fields.hasErrors('furigana')}" th:errors="*{furigana}" class="text-danger"></div>
+        </div>
+        <div class="form-group">
+            <label for="gender">性別</label>
+            <select class="form-control" id="gender" th:field="*{gender}">
+                <option value="male">男性</option>
+                <option value="female">女性</option>
+                <option value="other">その他</option>
+            </select>
+            <div th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}" class="text-danger"></div>
+        </div>
+        <div class="form-group">
+            <label for="age">年齢</label>
+            <input type="number" class="form-control" id="age" th:field="*{age}">
+            <div th:if="${#fields.hasErrors('age')}" th:errors="*{age}" class="text-danger"></div>
+        </div>
+        <div class="form-group">
+            <label for="introduction">自己紹介</label>
+            <textarea class="form-control" id="introduction" th:field="*{introduction}"></textarea>
+            <div th:if="${#fields.hasErrors('introduction')}" th:errors="*{introduction}" class="text-danger"></div>
+        </div>
+        <button type="submit" class="btn btn-primary">登録</button>
+    </form>
+</div>
+</body>
+</html>
